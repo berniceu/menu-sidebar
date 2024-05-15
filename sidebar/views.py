@@ -123,3 +123,5 @@ def QualityManagementView(request):
 def sidebarView(request):
     return render(request, 'sidebar.html')
 
+def homepage(request):
+    return HttpResponse('<h1>Welcome to the homepage!</h1>')

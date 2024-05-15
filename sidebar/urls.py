@@ -13,6 +13,7 @@ urlpatterns = [
     path('workerscompensation/', views.WorkersCompensationView),
     path('qualitymanagement/', views.QualityManagementView),
     path('', views.sidebarView, name='sidebar'),
+    
 
     
 ]
