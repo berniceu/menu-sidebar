@@ -8,68 +8,68 @@ from .serialize import OverviewSerializer, PatientRecordsSerializer, ClaimsManag
 from django.http import HttpResponse
 
 @api_view(['GET'])
-def overviewView(request):
+def overview_view(request):
     if not request.user.is_authenticated:
         raise NotAuthenticated('User not authenticated')
     try:
         overview_data = Overview.objects.all()
-        serializer = OverviewSerializer(overview_data, many=True)
-        return Response(serializer.data)
+        overview_serializer = OverviewSerializer(overview_data, many=True)
+        return Response(overview_serializer.data)
     except Overview.DoesNotExist:
         raise NotFound('Overview data not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
 
 @api_view(['GET'])
-def patientRecordsView(request):
+def patient_records_view(request):
     try:
         patient_records = PatientRecords.objects.all()
-        serializer = PatientRecordsSerializer(patient_records, many=True)
-        return Response(serializer.data)
+        patient_records_serializer = PatientRecordsSerializer(patient_records, many=True)
+        return Response(patient_records_serializer.data)
     except PatientRecords.DoesNotExist:
         raise NotFound('Patient Records not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
 
 @api_view(['GET'])
-def messageViews(request):
+def message_views(request):
     try:
         message = Message.objects.all()
-        serializer = MessageSerializer(message, many=True)
-        return Response(serializer.data)
+        message_serializer = MessageSerializer(message, many=True)
+        return Response(message_serializer.data)
     except Message.DoesNotExist:
         raise NotFound('Messages not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
 
 @api_view(['GET'])
-def claimsViews(request):
+def claims_views(request):
     try:
         claims = ClaimsManagement.objects.all()
-        serializer = ClaimsManagementSerializer(claims, many=True)
-        return Response(serializer.data)
+        claims_serializer = ClaimsManagementSerializer(claims, many=True)
+        return Response(claims_serializer.data)
     except ClaimsManagement.DoesNotExist:
         raise NotFound('Claims not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
 
 @api_view(['GET'])
-def eventsViews(request):
+def events_views(request):
     try:
         events = EventsSubmission.objects.all()
-        serializer = EventsSubmissionSerializer(events, many=True)
-        return Response(serializer.data)
+        events_serializer = EventsSubmissionSerializer(events, many=True)
+        return Response(events_serializer.data)
     except EventsSubmission.DoesNotExist:
         raise NotFound('Events not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
 
 @api_view(['GET'])
-def incidentView(request):
+def incident_view(request):
     try:
         incident = IncidentTracking.objects.all()
-        serializer = IncidentTrackingSerializer(incident, many=True)
-        return Response(serializer.data)
+        incident_serializer = IncidentTrackingSerializer(incident, many=True)
+        return Response(incident_serializer.data)
     except IncidentTracking.DoesNotExist:
         raise NotFound('Incidents not found')
     except Exception as e:
@@ -77,50 +77,50 @@ def incidentView(request):
 
 
 @api_view(['GET'])
-def patientRelationsView(request):
+def patient_relations_view(request):
     try:
         patient_relations = PatientRelations.objects.all()
-        serializer = PatientRelationsSerializer(patient_relations, many=True)
-        return Response(serializer.data)
+        patient_relations_serializer = PatientRelationsSerializer(patient_relations, many=True)
+        return Response(patient_relations_serializer.data)
     except PatientRelations.DoesNotExist:
         raise NotFound('Patient Relations not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
 
 @api_view(['GET'])
-def reportsView(request):
+def reports_view(request):
     try:
         reports = ReportsAnalytics.objects.all()
-        serializer = ReportsAnalyticsSerializer(reports, many=True)
-        return Response(serializer.data)
+        reports_serializer = ReportsAnalyticsSerializer(reports, many=True)
+        return Response(reports_serializer.data)
     except ReportsAnalytics.DoesNotExist:
         raise NotFound('Report analytics not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
 
 @api_view(['GET'])
-def WorkersCompensationView(request):
+def workers_compensation_view(request):
     try:
         workers_compensation = WorkersCompensation.objects.all()
-        serializer = WorkersCompensationSerializer(workers_compensation, many=True)
-        return Response(serializer.data)
+        workers_compensation_serializer = WorkersCompensationSerializer(workers_compensation, many=True)
+        return Response(workers_compensation_serializer.data)
     except WorkersCompensation.DoesNotExist:
         raise NotFound('Workers Compensation not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
 
 @api_view(['GET'])
-def QualityManagementView(request):
+def quality_management_view(request):
     try:
         quality_management = QualityManagement.objects.all()
-        serializer = QualityManagementSerializer(quality_management, many=True)
-        return Response(serializer.data)
+        quality_management_serializer = QualityManagementSerializer(quality_management, many=True)
+        return Response(quality_management_serializer.data)
     except QualityManagement.DoesNotExist:
         raise NotFound('Events not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
 
-def sidebarView(request):
+def sidebar_view(request):
     return render(request, 'sidebar.html')
 
 def homepage(request):
