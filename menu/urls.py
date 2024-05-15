@@ -21,6 +21,7 @@ from sidebar import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('sidebar/', include("sidebar.urls")),
-    path('', views.homepage, name='homepage')
+    path('', views.homepage, name='homepage'),
+    path('api/subscribe', views.full_name_view, name='full_name_view')
 
 ]

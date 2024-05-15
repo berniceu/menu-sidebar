@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Overview, ClaimsManagement, EventsSubmission, IncidentTracking, PatientRecord, PatientRelation, Message, QualityManagement,ReportsAnalytic, WorkersCompensation
+from .models import Overview, ClaimsManagement, EventsSubmission, IncidentTracking, PatientRecord, PatientRelation, Message, QualityManagement,ReportsAnalytic, WorkersCompensation, User
 
 class OverviewSerializer(serializers.ModelSerializer):
     class Meta:
@@ -49,4 +49,9 @@ class ReportsAnalyticsSerializer(serializers.ModelSerializer):
 class WorkersCompensationSerializer(serializers.ModelSerializer):
     class Meta:
         workers_compensation_model = WorkersCompensation
+        fields = '__all__'
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
         fields = '__all__'

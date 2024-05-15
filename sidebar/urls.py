@@ -14,6 +14,8 @@ urlpatterns = [
     path('qualitymanagement/', views.quality_management_view),
     path('', views.sidebar_view, name='sidebar'),
     
+    
+    
 
     
 ]

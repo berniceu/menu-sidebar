@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework.exceptions import NotFound, APIException, NotAuthenticated
-from .models import  Overview, PatientRecord, Message, ClaimsManagement, EventsSubmission, IncidentTracking, PatientRelation, ReportsAnalytic, WorkersCompensation, QualityManagement 
+from .models import  Overview, PatientRecord, Message, ClaimsManagement, EventsSubmission, IncidentTracking, PatientRelation, ReportsAnalytic, WorkersCompensation, QualityManagement, User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serialize import OverviewSerializer, PatientRecordsSerializer, ClaimsManagementSerializer, EventsSubmissionSerializer, IncidentTrackingSerializer, MessageSerializer, PatientRelationsSerializer, ReportsAnalyticsSerializer, QualityManagementSerializer, WorkersCompensationSerializer
+from .serialize import OverviewSerializer, PatientRecordsSerializer, ClaimsManagementSerializer, EventsSubmissionSerializer, IncidentTrackingSerializer, MessageSerializer, PatientRelationsSerializer, ReportsAnalyticsSerializer, QualityManagementSerializer, WorkersCompensationSerializer, UserSerializer
 
 from django.http import HttpResponse
 
@@ -117,6 +117,42 @@ def quality_management_view(request):
         return Response(quality_management_serializer.data)
     except QualityManagement.DoesNotExist:
         raise NotFound('Events not found')
+    except Exception as e:
+        raise APIException('Server error: {}'.format(str(e)))
+    
+@api_view(['POST', 'GET'])
+def full_name_view(request):
+    try:
+        if request.method == 'POST':
+            user_full_name = request.data.get('full_name')
+            user_email = request.data.get('email')
+
+            if not user_email:
+                return Response({'error': 'Email is required'}, status=400)
+
+            if not user_full_name:
+                return Response({'error': 'Full Name is required'}, status=400)
+            
+            if User.objects.filter(user_email=user_email).exists():
+                return Response({'error': 'User already exists'})
+            
+            full_name = user_full_name.split(" ")
+            
+            first_name = full_name[0]
+            last_name = ' '.join(full_name[1:])
+
+            user = User(first_name=first_name, last_name=last_name, user_email=user_email)
+            user.save()
+            user_serializer = UserSerializer(user)
+
+            return Response({"message": "subscribed successfully", "user": user_serializer.data}, status=201)
+        
+        if request.method == 'GET':
+            subscribed_users = User.objects.all()
+            subscribed_users_serializer = UserSerializer(subscribed_users, many=True)
+            return Response(subscribed_users_serializer.data)
+
+        
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
 
