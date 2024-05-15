@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.exceptions import NotFound, APIException, NotAuthenticated
-from .models import  Overview, PatientRecords, Message, ClaimsManagement, EventsSubmission, IncidentTracking, PatientRelations, ReportsAnalytics, WorkersCompensation, QualityManagement 
+from .models import  Overview, PatientRecord, Message, ClaimsManagement, EventsSubmission, IncidentTracking, PatientRelation, ReportsAnalytic, WorkersCompensation, QualityManagement 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serialize import OverviewSerializer, PatientRecordsSerializer, ClaimsManagementSerializer, EventsSubmissionSerializer, IncidentTrackingSerializer, MessageSerializer, PatientRelationsSerializer, ReportsAnalyticsSerializer, QualityManagementSerializer, WorkersCompensationSerializer
@@ -23,10 +23,10 @@ def overview_view(request):
 @api_view(['GET'])
 def patient_records_view(request):
     try:
-        patient_records = PatientRecords.objects.all()
+        patient_records = PatientRecord.objects.all()
         patient_records_serializer = PatientRecordsSerializer(patient_records, many=True)
         return Response(patient_records_serializer.data)
-    except PatientRecords.DoesNotExist:
+    except PatientRecord.DoesNotExist:
         raise NotFound('Patient Records not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
@@ -79,10 +79,10 @@ def incident_view(request):
 @api_view(['GET'])
 def patient_relations_view(request):
     try:
-        patient_relations = PatientRelations.objects.all()
+        patient_relations = PatientRelation.objects.all()
         patient_relations_serializer = PatientRelationsSerializer(patient_relations, many=True)
         return Response(patient_relations_serializer.data)
-    except PatientRelations.DoesNotExist:
+    except PatientRelation.DoesNotExist:
         raise NotFound('Patient Relations not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
@@ -90,10 +90,10 @@ def patient_relations_view(request):
 @api_view(['GET'])
 def reports_view(request):
     try:
-        reports = ReportsAnalytics.objects.all()
+        reports = ReportsAnalytic.objects.all()
         reports_serializer = ReportsAnalyticsSerializer(reports, many=True)
         return Response(reports_serializer.data)
-    except ReportsAnalytics.DoesNotExist:
+    except ReportsAnalytic.DoesNotExist:
         raise NotFound('Report analytics not found')
     except Exception as e:
         raise APIException('Server error: {}'.format(str(e)))
